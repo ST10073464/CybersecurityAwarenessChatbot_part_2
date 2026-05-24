@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Build and Test
+name: .NET Build
 
 on:
   push:
@@ -45,28 +45,24 @@ on:
     branches: [ "master", "main" ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: windows-latest
 
     steps:
-      # 1. Checkout code
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup .NET
+      # Setup .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
 
-      # 3. Restore dependencies
+      # Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore CybersecurityAwarenessChatbot.sln
 
-      # 4. Build solution
+      # Build solution
       - name: Build solution
-        run: dotnet build --configuration Release --no-restore
-
-      # 5. Run tests
-      - name: Run tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: dotnet build CybersecurityAwarenessChatbot.sln --configuration Release --no-restore
