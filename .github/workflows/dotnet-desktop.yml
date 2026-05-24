@@ -80,7 +80,7 @@ jobs:
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     # To:
     - name: Restore the application
-      run: dotnet restore $env:CybersecurityAwarenessChatbot
+      run: dotnet restore $env:Solution_Name
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
