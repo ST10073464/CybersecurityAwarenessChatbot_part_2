@@ -57,9 +57,7 @@ jobs:
 
     env:
       Solution_Name: CybersecurityAwarenessChatbot.slnx
-      Test_Project_Path: CybersecurityAwarenessChatbot.Tests/CybersecurityAwarenessChatbot.Tests.csproj
-      Wap_Project_Directory: CybersecurityAwarenessChatbot.Package
-      Wap_Project_Path: CybersecurityAwarenessChatbot.Package/CybersecurityAwarenessChatbot.Package.wapproj
+      
 
     steps:
     - name: Checkout
