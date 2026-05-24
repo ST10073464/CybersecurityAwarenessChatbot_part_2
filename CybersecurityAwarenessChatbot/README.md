@@ -388,7 +388,7 @@ Visual Studio 2022 or 2026
 
 ## video demonstration of how to clone from github and run the WPF application
 
-![CybersecurityAwarenessChatbot] (instructions/How to Clone Part 2_ST10073464.pdf)
+[CybersecurityAwarenessChatbot] (instructions/How to Clone Part 2_ST10073464.pdf)
 
 3. Build the Solution
 
