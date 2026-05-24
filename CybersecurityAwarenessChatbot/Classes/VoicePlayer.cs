@@ -7,28 +7,20 @@ using System.Media;
 
 namespace CybersecurityAwarenessChatbot.Classes
 {
-    class VoicePlayer
+    // Handles all chatbot sounds.
+    public static class VoicePlayer
     {
-        // Plays a greeting sound when the chatbot starts
-        public void PlayGreeting()
+        public static void PlayGreeting()
         {
-            try
-            {
-                
-                SoundPlayer player = new SoundPlayer(Properties.Resources.hello);
-
-                player.PlaySync();
-
-                // Small pause for effect
-                Thread.Sleep(500);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Audio file could not be played.");
-
-                // Small pause for effect
-                Thread.Sleep(500);
-            }
+            SoundPlayer player = new SoundPlayer("Audio/hello.wav");
+            player.Play();
         }
+
+        public static void PlaySound()
+        {
+            SoundPlayer player = new SoundPlayer("Audio/notification.wav");
+            player.Play();
+        }
+
     }
 }
