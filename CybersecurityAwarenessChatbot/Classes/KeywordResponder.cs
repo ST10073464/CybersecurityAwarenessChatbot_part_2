@@ -2,186 +2,193 @@
     Erwin Mashobane
     ST10073464
 */
-using System;
-using System.Collections.Generic;
-//using System.Data;
 
 namespace CybersecurityAwarenessChatbot.Classes
 {
-    class Responses
+    /// Handles cybersecurity keyword recognition and random responses.
+    public class KeywordResponder
     {
-        private static Random rand = new Random();
+        //private readonly Dictionary<string, List<string>> _responses;
 
+        //private readonly Random _random;
+
+        private readonly Dictionary<string, List<string>> keywordResponses;
+        private readonly Dictionary<string, List<string>> keywordAliases;
+        private readonly Random random;
+
+
+        public string LastMatchedKeyword { get; private set; }
+
+        public KeywordResponder()
+        {
+            //_random = new Random();
+
+            //_responses = new Dictionary<string, List<string>>
+
+            random = new Random();
+
+            keywordAliases = new Dictionary<string, List<string>>
+            {
+                { "password", new List<string> { "password", "passcode", "login", "credentials" } },
+                { "phishing", new List<string> { "phishing", "fake email", "scam email" } },
+                { "privacy", new List<string> { "privacy", "tracking", "permissions" } },
+                { "malware", new List<string> { "malware", "virus", "trojan", "spyware" } },
+                { "scam", new List<string> { "scam", "fraud", "impersonation" } },
+                { "vpn", new List<string> { "vpn", "virtual private network" } },
+                { "wifi", new List<string> { "wifi", "public wifi", "hotspot" } },
+                { "2fa", new List<string> { "2fa", "two-factor authentication", "authentication" } },
+                { "ransomware", new List<string> { "ransomware", "encrypted files" } },
+                { "downloads", new List<string> { "downloads", "download files" } }
+            };
+
+
+            keywordResponses = new Dictionary<string, List<string>>
+            {
+                {
+                    "password",
+                    new List<string>
+                    {
+                        "🔒 Use strong passwords with symbols and numbers.",
+                        "🛡️ Never reuse passwords across multiple websites.",
+                        "💡 Use a password manager for secure storage."
+                    }
+                },
+
+                {
+                    "phishing",
+                    new List<string>
+                    {
+                        "🎣 Never click suspicious email links.",
+                        "⚠️ Check sender email addresses carefully.",
+                        "📧 Banks never ask for passwords via email.",
+                        "⚠️ Look carefully for spelling mistakes in phishing emails."
+                    }
+                },
+
+                {
+                    "privacy",
+                    new List<string>
+                    {
+                        "🛡️ Review your social media privacy settings.",
+                        "🔒 Limit personal information shared online.",
+                        "📱 Disable unnecessary app permissions.",
+                        "🛡️ Use secure websites that start with HTTPS."
+                    }
+                },
+
+                {
+                    "malware",
+                    new List<string>
+                    {
+                        "💻 Install trusted antivirus software to prevent malware infections.",
+                        "⚠️ Avoid downloading files from unknown sites.",
+                        "🔒 Keep Windows updated for security patches.",
+                        "⚠️ Malware can steal sensitive information from your device."
+                    }
+                },
+
+                {
+                    "scam",
+                    new List<string>
+                    {
+                        "🚨 If it sounds too good to be true, it probably is.",
+                        "💰 Never send money to strangers online.",
+                        "📞 Ignore fake lottery or prize calls.",
+                        "💰 Be careful of investment scams on social media."
+                    }
+                },
+
+                {
+                    "vpn",
+                    new List<string>
+                    {
+                        "🌍 VPNs protect your internet traffic on public Wi-Fi.",
+                        "🔒 A VPN helps keep your browsing private.",
+                        "📡 Use trusted VPN providers only."
+                    }
+                },
+
+                {
+                    "wifi",
+                    new List<string>
+                    {
+                        "🌍 Avoid logging into banking apps on public WiFi.",
+                        "🔒 Use a VPN when connected to public hotspots.",
+                        "🚨Hackers may monitor unsecured WiFi networks."
+                    }
+                },
+
+                {
+                    "2fa",
+                    new List<string>
+                    {
+                        "🔒 Two-factor authentication adds extra account security.",
+                        "💡 Enable 2FA on banking and email accounts.",
+                        "🚨 Authenticator apps are safer than SMS codes."
+                    }
+                },
+
+                {
+                    "ransomware",
+                    new List<string>
+                    {
+                        "💾 Backup important files regularly.",
+                        "⚠️ Never open suspicious attachments.",
+                        "🔒 Ransomware encrypts your files for payment."
+                    }
+                },
+
+                {
+                    "downloads",
+                    new List<string>
+                    {
+                        "💾 Only download files from trusted websites.",
+                        "💻 Scan downloads before opening them.",
+                        "⚠️ Pirated software often contains malware."
+                    }
+                }
+
+            };
+        }
+
+        // Returns a random response for matched keyword.
         public string GetResponse(string input)
         {
-            input = input.ToLower().Trim();
+            input = input.ToLower();
 
-            // Greeting
-            if (Contains(input, "how are you", "hello", "hey", "hi"))
+            foreach (var keyword in keywordAliases)
             {
-                return RandomResponse(
-                    $"Hey there How can I help you stay safe online today?",
-                    $"Hi! Ready to learn how to protect yourself online?",
-                    $"Hello! I'm here to help you stay secure online"
-                );
+                foreach (string alias in keyword.Value)
+                {
+                    if (input.Contains(alias))
+                    {
+                        LastMatchedKeyword = keyword.Key;
+
+                        List<string> responses = keywordResponses[keyword.Key];
+
+                        return responses[random.Next(responses.Count)];
+                    }
+                }
             }
 
-            // Purpose
-            else if (Contains(input, "purpose", "what do you do"))
-            {
-                return RandomResponse(
-                    "My purpose is to help you understand cybersecurity and stay safe online.",
-                    "I guide you on how to avoid online threats and protect your data.",
-                    "I'm here to teach you how to stay secure in the digital world."
-                );
-            }
-
-            // Password Safety
-            else if (Contains(input, "password"))
-            {
-                return RandomResponse(
-                    "A strong password should include uppercase, lowercase, numbers, and symbols",
-                    "Make your passwords long and unique. Avoid using personal info!",
-                    "Tip: Use a mix of characters and never reuse passwords across sites."
-                );
-            }
-
-            // Advanced Password
-            else if (Contains(input, "strong password", "create password"))
-            {
-                return RandomResponse(
-                    "Try a passphrase like 'BlueSky#2026!' — strong and memorable.",
-                    "Use a sentence-style password, it's harder to crack.",
-                    "Combine random words with symbols for better security."
-                );
-            }
-
-            // Phishing
-            else if (Contains(input, "phishing", "scam"))
-            {
-                return RandomResponse(
-                    "Phishing tricks you into giving personal info through fake emails or sites.",
-                    "Always double-check emails before clicking links — scammers are sneaky!",
-                    "If something feels urgent or suspicious, it’s probably a scam."
-                );
-            }
-
-            // Suspicious Emails
-            else if (Contains(input, "suspicious email", "fake email"))
-            {
-                return RandomResponse(
-                    "Never click unknown links. Verify emails directly with the company.",
-                    "Check the sender’s address carefully — scammers fake identities.",
-                    "If it asks for personal info urgently, it's likely a scam."
-                );
-            }
-
-            // Browsing
-            else if (Contains(input, "safe browsing", "browser", "website"))
-            {
-                return RandomResponse(
-                    "Always look for HTTPS before entering sensitive info.",
-                    "Avoid downloading from unknown websites.",
-                    "Keep your browser updated for better protection."
-                );
-            }
-
-            // Links
-            else if (Contains(input, "link", "url"))
-            {
-                return RandomResponse(
-                    "Hover over links to see where they really go.",
-                    "Shortened links can hide dangerous sites — be careful!",
-                    "If a link looks suspicious, don’t click it."
-                );
-            }
-
-            // Malware
-            else if (Contains(input, "malware", "virus"))
-            {
-                return RandomResponse(
-                    "Malware can steal data or damage your system — avoid unsafe downloads.",
-                    "Install antivirus software and keep it updated.",
-                    "Be careful what you install — not all software is safe."
-                );
-            }
-
-            // Social Engineering
-            else if (Contains(input, "social engineering"))
-            {
-                return RandomResponse(
-                    "Attackers manipulate people to get sensitive info — stay alert.",
-                    "Never trust unexpected requests for personal data.",
-                    "Always verify before sharing confidential information."
-                );
-            }
-
-            // Personal Data
-            else if (Contains(input, "personal information", "data protection"))
-            {
-                return RandomResponse(
-                    "Never share sensitive info unless you're sure the site is secure.",
-                    "Protect your identity — don’t overshare online.",
-                    "Keep your personal data private and secure."
-                );
-            }
-
-            // WiFi
-            else if (Contains(input, "wifi", "public wifi"))
-            {
-                return RandomResponse(
-                    "Public WiFi is risky — avoid logging into sensitive accounts.",
-                    "Use a VPN when using public networks.",
-                    "Hackers can intercept data on public WiFi."
-                );
-            }
-
-            // 2FA
-            else if (Contains(input, "2fa", "two factor"))
-            {
-                return RandomResponse(
-                    "2FA adds an extra layer of security — always enable it!",
-                    "Even if your password is stolen, 2FA keeps you safe.",
-                    "It’s one of the best ways to protect your accounts."
-                );
-            }
-
-            // What can I ask
-            else if (Contains(input, "what can i ask"))
-            {
-                return RandomResponse(
-                    "You can ask about passwords, scams, malware, or safe browsing.",
-                    "Try asking me about online threats or how to protect yourself.",
-                    "I can help with cybersecurity tips and best practices."
-                );
-            }
-
-            // Default (AI-like fallback)
-            else
-            {
-                return RandomResponse(
-                    "Hmm I’m not sure I understood that. Try asking about cybersecurity topics.",
-                    "Interesting… could you rephrase that in terms of online safety?",
-                    "I'm still learning — try asking about passwords, scams, or browsing safety."
-                );
-            }
+            return null;
         }
 
-        // Helper: Keyword matching
-        private bool Contains(string input, params string[] keywords)
+        // Returns another random response for follow-up questions.
+        public string GetFollowUpResponse()
         {
-            foreach (var word in keywords)
-            {
-                if (input.Contains(word))
-                    return true;
-            }
-            return false;
+            if (string.IsNullOrEmpty(LastMatchedKeyword))
+                return "Please ask about a cybersecurity topic first.";
+
+            List<string> responses = keywordResponses[LastMatchedKeyword];
+
+            return responses[random.Next(responses.Count)];
         }
 
-        // Helper: AI-style random responses
-        private string RandomResponse(params string[] responses)
+        // Returns all supported keywords.
+        public List<string> GetAllKeywords()
         {
-            return responses[rand.Next(responses.Length)];
+            return keywordResponses.Keys.ToList();
         }
     }
 }
