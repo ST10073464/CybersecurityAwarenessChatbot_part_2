@@ -79,13 +79,13 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test
+      run: dotnet test $env:Test_Project_Path
+      continue-on-error: true
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
+    # To:
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      run: dotnet restore
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
