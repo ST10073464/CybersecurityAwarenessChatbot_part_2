@@ -2,6 +2,7 @@
     Erwin Mashobane
     ST10073464
 */
+
 namespace CybersecurityAwarenessChatbot.Classes
 {
     // Stores chatbot memory and user preferences.

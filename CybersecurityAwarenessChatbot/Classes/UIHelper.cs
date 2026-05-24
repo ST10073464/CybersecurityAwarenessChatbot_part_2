@@ -2,9 +2,8 @@
     Erwin Mashobane
     ST10073464
 */
-/*using System;
-using System.Threading;
 
+/*
 namespace CybersecurityAwarenessChatbot.Classes
 {
     public static class UIHelper
