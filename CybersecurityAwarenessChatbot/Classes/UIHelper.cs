@@ -27,6 +27,11 @@ namespace CybersecurityAwarenessChatbot.Classes
     }
 }*/
 
+/*
+    Erwin Mashobane
+    ST10073464
+*/
+
 namespace CybersecurityAwarenessChatbot.Classes
 {
     // Loads SecureWin ASCII art.
