@@ -3,28 +3,24 @@
     ST10073464
 */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace CybersecurityAwarenessChatbot.Classes
 {
     /// Handles cybersecurity keyword recognition and random responses.
     public class KeywordResponder
     {
-        //private readonly Dictionary<string, List<string>> _responses;
-
-        //private readonly Random _random;
-
         private readonly Dictionary<string, List<string>> keywordResponses;
         private readonly Dictionary<string, List<string>> keywordAliases;
         private readonly Random random;
 
 
-        public string LastMatchedKeyword { get; private set; }
+        public string LastMatchedKeyword { get; private set; } = string.Empty;
 
         public KeywordResponder()
         {
-            //_random = new Random();
-
-            //_responses = new Dictionary<string, List<string>>
-
             random = new Random();
 
             keywordAliases = new Dictionary<string, List<string>>
@@ -40,7 +36,6 @@ namespace CybersecurityAwarenessChatbot.Classes
                 { "ransomware", new List<string> { "ransomware", "encrypted files" } },
                 { "downloads", new List<string> { "downloads", "download files" } }
             };
-
 
             keywordResponses = new Dictionary<string, List<string>>
             {
@@ -154,7 +149,10 @@ namespace CybersecurityAwarenessChatbot.Classes
         // Returns a random response for matched keyword.
         public string GetResponse(string input)
         {
-            input = input.ToLower();
+            if (string.IsNullOrWhiteSpace(input))
+                return "Please ask a cybersecurity question.";
+
+            input = input.ToLowerInvariant();
 
             foreach (var keyword in keywordAliases)
             {
@@ -165,13 +163,12 @@ namespace CybersecurityAwarenessChatbot.Classes
                         LastMatchedKeyword = keyword.Key;
 
                         List<string> responses = keywordResponses[keyword.Key];
-
                         return responses[random.Next(responses.Count)];
                     }
                 }
             }
 
-            return null;
+            return "I don't have information on that topic. Try asking about password, phishing, privacy, malware, scam, vpn, wifi, 2fa, ransomware, or downloads.";
         }
 
         // Returns another random response for follow-up questions.

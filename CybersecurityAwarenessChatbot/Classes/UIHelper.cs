@@ -34,9 +34,9 @@ namespace CybersecurityAwarenessChatbot.Classes
 namespace CybersecurityAwarenessChatbot.Classes
 {
     // Loads SecureWin ASCII art.
-    public static class AsciiArtService
+    public static class UIHelper
     {
-        public static string LoadAsciiArt()
+        public static string ShowLogo()
         {
             return @"
  ███████╗███████╗ ██████╗██╗   ██╗██████╗ ███████╗██╗    ██╗██╗███╗   ██╗

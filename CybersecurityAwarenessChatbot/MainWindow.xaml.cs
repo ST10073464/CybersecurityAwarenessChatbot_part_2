@@ -19,14 +19,34 @@ namespace CybersecurityAwarenessChatbot
             // Initialize chatbot
             _chatBot = new ChatBot();
 
-            // Load ASCII art
-            AsciiArtText.Text = AsciiArtService.LoadAsciiArt();
+            // Disable textbox during startup greeting
+            UserInputTextBox.IsEnabled = false;
+            SendButton.IsEnabled = false;
 
-            // Play greeting voice
-            VoicePlayer.PlayGreeting();
+            // Load ASCII art
+            AsciiArtText.Text = UIHelper.ShowLogo();
 
             // Display greeting message
             AppendBotMessage(_chatBot.GetGreeting());
+
+            // Run startup sequence
+            Loaded += MainWindow_Loaded;
+        }
+
+         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Play greeting voice
+            VoicePlayer.PlayGreeting();
+
+            // Wait while audio plays
+            await Task.Delay(10500);
+
+            // Enable user interaction
+            UserInputTextBox.IsEnabled = true;
+            SendButton.IsEnabled = true;
+
+            // Focus textbox automatically
+            UserInputTextBox.Focus();
         }
 
         // Handles send button click.
@@ -47,7 +67,7 @@ namespace CybersecurityAwarenessChatbot
         // Sends user message to chatbot.
         private void SendMessage()
         {
-            string input = UserInputTextBox.Text.Trim();
+            string input = (UserInputTextBox.Text ?? string.Empty).Trim();
 
             if (string.IsNullOrWhiteSpace(input))
                 return;
@@ -59,7 +79,7 @@ namespace CybersecurityAwarenessChatbot
             AppendUserMessage(input);
 
             // Process chatbot response
-            string response = _chatBot.ProcessInput(input);
+            string response = _chatBot.ProcessInput(input) ?? string.Empty;
 
             // Display bot response
             AppendBotMessage(response);
@@ -126,11 +146,16 @@ namespace CybersecurityAwarenessChatbot
         // Adds emojis to the input box.
         private void Emoji_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-
-            UserInputTextBox.Text += " " + button.Content.ToString();
-            UserInputTextBox.Focus();
-            UserInputTextBox.CaretIndex = UserInputTextBox.Text.Length;
+            if (sender is Button button)
+            {
+                string emoji = button.Content?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(emoji))
+                {
+                    UserInputTextBox.Text += " " + emoji;
+                    UserInputTextBox.Focus();
+                    UserInputTextBox.CaretIndex = UserInputTextBox.Text.Length;
+                }
+            }
         }
     }
 }
