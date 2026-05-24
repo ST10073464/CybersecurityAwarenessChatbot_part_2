@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Erwin Temporary\.nuget\packages\microsoft.testplatform.testhost\18.5.1\build\net8.0\x64\testhost.dll" />
+    <Content Remove="C:\Users\Erwin Temporary\.nuget\packages\microsoft.testplatform.testhost\18.5.1\build\net8.0\x64\testhost.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Audio\hello.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -19,6 +24,12 @@
 
   <ItemGroup>
     <Folder Include="images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.2.3" />
   </ItemGroup>
 
 </Project>

@@ -25,6 +25,9 @@ The main objectives of this project are to:
 ### 1. Voice Greeting
 When the chatbot launches, it plays a **voice greeting (WAV file)** to welcome the user.
 
+```
+hello.wav is inside the folder audio and is played using the System.Media.SoundPlayer class in C#.
+```
 Example greeting:
 ```
 Hello! Welcome to the SecureWin.
@@ -241,7 +244,24 @@ The interface includes:
 
 ---
 
-2. Intelligent Chatbot Responses
+### 2. Voice Greeting
+When the chatbot launches, it plays a **voice greeting (WAV file)** to welcome the user.
+
+```
+hello.wav is inside the folder audio and is played using the System.Media.SoundPlayer class in C#.
+```
+
+The chatbot plays sound effects to improve user interaction and make responses more engaging.
+
+---
+
+### 3. ASCII Art Logo
+The chatbot displays an **ASCII cybersecurity-themed logo** when the program starts.
+
+This improves the visual appearance of the console interface.
+
+
+### 4. Intelligent Chatbot Responses
 
 The chatbot can recognise cybersecurity-related topics and respond with helpful advice.
 
@@ -259,7 +279,7 @@ You: Tell me about phishing
 
 Bot: 🎣 Phishing is a cyberattack where attackers trick users into revealing personal information through fake emails or websites.
 
-3. Sentiment Detection
+### 5. Sentiment Detection
 
 The chatbot can detect emotional words in user messages and respond empathetically.
 
@@ -269,7 +289,7 @@ You: I am worried about hackers
 
 Bot: 💙 I understand your concern. Using strong passwords and enabling two-factor authentication can improve your security.
 
-4. User Memory Functionality
+### 6. User Memory Functionality
 
 The chatbot remembers user information such as:
 
@@ -282,7 +302,7 @@ You: My name is Erwin
 
 Bot: 👋 Nice to meet you Erwin!
 
-5. Improved User Experience
+### 7. Improved User Experience
 
 ### The application includes:
 
@@ -292,7 +312,7 @@ Bot: 👋 Nice to meet you Erwin!
 - Enter-key support for sending messages
 - Responsive chat display
 
-6. Input Validation
+### 8. Input Validation
 
 ### The chatbot handles:
 
@@ -302,7 +322,6 @@ Invalid input
 
 ## Example:
 
-```
 Bot: 🤔 I am still learning about that topic.
 ```
 Technologies Used
@@ -397,6 +416,7 @@ Visual Studio 2022 or 2026
 4. Run the Application
 
 F5 or Ctrl/fn + F5
+
 
 ### Part 3
 
